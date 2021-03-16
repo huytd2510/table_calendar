@@ -262,6 +262,7 @@ class CalendarController {
   /// Displays the next Calendar page.
   void nextPage() {
     if (calendarFormat == CalendarFormat.month) {
+      print("ok");
       _selectNextMonth();
     } else if (calendarFormat == CalendarFormat.twoWeeks) {
       _selectNextTwoWeeks();

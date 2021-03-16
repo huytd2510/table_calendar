@@ -385,51 +385,71 @@ class _TableCalendarState extends State<TableCalendar>
   Widget _buildHeader() {
     final children = [
       widget.headerStyle.leftChevronVisible
-          ? _CustomIconButton(
+          ?
+            Container(
+                width: 24,
+                height: 24,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0xffE3E8F9),
+                  shape: BoxShape.circle,
+                ),
+                child: _CustomIconButton(
               icon: widget.headerStyle.leftChevronIcon,
               onTap: _selectPrevious,
               margin: widget.headerStyle.leftChevronMargin,
               padding: widget.headerStyle.leftChevronPadding,
             )
+            )
           : Container(),
-      Expanded(
-        child: GestureDetector(
-          onTap: _onHeaderTapped,
-          onLongPress: _onHeaderLongPressed,
-          child: Text(
-            widget.headerStyle.titleTextBuilder != null
-                ? widget.headerStyle.titleTextBuilder(
-                    widget.calendarController.focusedDay, widget.locale)
-                : DateFormat.yMMMM(widget.locale)
-                    .format(widget.calendarController.focusedDay),
-            style: widget.headerStyle.titleTextStyle,
-            textAlign: widget.headerStyle.centerHeaderTitle
-                ? TextAlign.center
-                : TextAlign.start,
+          Container(
+            width: 113,
+            height: 28,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Color(0xffE3E8F9),
+                  borderRadius: BorderRadius.circular(6),
+            ),
+            child: GestureDetector(
+              onTap: _onHeaderTapped,
+              onLongPress: _onHeaderLongPressed,
+              child: Text(
+                widget.headerStyle.titleTextBuilder != null
+                    ? widget.headerStyle.titleTextBuilder(
+                        widget.calendarController.focusedDay, widget.locale)
+                    : DateFormat.Md(widget.locale)
+                        .format(widget.calendarController.focusedDay),
+                style: widget.headerStyle.titleTextStyle,
+                textAlign: widget.headerStyle.centerHeaderTitle
+                    ? TextAlign.center
+                    : TextAlign.start,
+              ),
+            ),
           ),
-        ),
-      ),
       widget.headerStyle.rightChevronVisible
-          ? _CustomIconButton(
+          ? Container(
+          width: 24,
+          height: 24,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Color(0xffE3E8F9),
+            shape: BoxShape.circle,
+          ),
+          child:_CustomIconButton(
               icon: widget.headerStyle.rightChevronIcon,
               onTap: _selectNext,
               margin: widget.headerStyle.rightChevronMargin,
               padding: widget.headerStyle.rightChevronPadding,
-            )
+            ))
           : Container()
     ];
-
-    if (widget.headerStyle.formatButtonVisible &&
-        widget.availableCalendarFormats.length > 1) {
-      children.insert(2, const SizedBox(width: 8.0));
-      children.insert(3, _buildFormatButton());
-    }
 
     return Container(
       decoration: widget.headerStyle.decoration,
       margin: widget.headerStyle.headerMargin,
       padding: widget.headerStyle.headerPadding,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: children,
       ),

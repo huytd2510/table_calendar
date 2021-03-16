@@ -21,16 +21,10 @@ class _CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: margin,
-      child: InkWell(
+    return InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(100.0),
-        child: Padding(
-          padding: padding,
-          child: icon,
-        ),
-      ),
+        child: icon,
+
     );
   }
 }

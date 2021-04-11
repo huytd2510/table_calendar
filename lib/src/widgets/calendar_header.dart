@@ -21,6 +21,7 @@ class CalendarHeader extends StatelessWidget {
   final ValueChanged<CalendarFormat> onFormatButtonTap;
   final Map<CalendarFormat, String> availableCalendarFormats;
   final DayBuilder? headerTitleBuilder;
+  final String preHeader;
 
   const CalendarHeader({
     Key? key,
@@ -35,12 +36,12 @@ class CalendarHeader extends StatelessWidget {
     required this.onFormatButtonTap,
     required this.availableCalendarFormats,
     this.headerTitleBuilder,
+    required this.preHeader,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final text = headerStyle.titleTextFormatter?.call(focusedMonth, locale) ??
-        DateFormat.yMMMM(locale).format(focusedMonth);
+    final text = '${preHeader} ${headerStyle.titleTextFormatter?.call(focusedMonth, locale) ?? DateFormat.M(locale).format(focusedMonth)}';
 
     return Container(
       decoration: headerStyle.decoration,
@@ -48,25 +49,32 @@ class CalendarHeader extends StatelessWidget {
       padding: headerStyle.headerPadding,
       child: Row(
         mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (headerStyle.leftChevronVisible)
             CustomIconButton(
               icon: headerStyle.leftChevronIcon,
               onTap: onLeftChevronTap,
-              margin: headerStyle.leftChevronMargin,
               padding: headerStyle.leftChevronPadding,
             ),
-          Expanded(
+          Container(
             child: headerTitleBuilder?.call(context, focusedMonth) ??
-                GestureDetector(
-                  onTap: onHeaderTap,
-                  onLongPress: onHeaderLongPress,
-                  child: Text(
-                    text,
-                    style: headerStyle.titleTextStyle,
-                    textAlign: headerStyle.titleCentered
-                        ? TextAlign.center
-                        : TextAlign.start,
+                Container(
+                  padding: EdgeInsets.fromLTRB(27,5,27,5),
+                   decoration: BoxDecoration(
+                                    color: Color(0xffE3E8F9),
+                                    borderRadius: BorderRadius.circular(6),
+                   ),
+                  child: GestureDetector(
+                    onTap: onHeaderTap,
+                    onLongPress: onHeaderLongPress,
+                    child: Text(
+                      text,
+                      style: headerStyle.titleTextStyle,
+                      textAlign: headerStyle.titleCentered
+                          ? TextAlign.center
+                          : TextAlign.start,
+                    ),
                   ),
                 ),
           ),
@@ -88,7 +96,6 @@ class CalendarHeader extends StatelessWidget {
             CustomIconButton(
               icon: headerStyle.rightChevronIcon,
               onTap: onRightChevronTap,
-              margin: headerStyle.rightChevronMargin,
               padding: headerStyle.rightChevronPadding,
             ),
         ],

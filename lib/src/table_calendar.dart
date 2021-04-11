@@ -32,8 +32,12 @@ enum RangeSelectionMode { disabled, toggledOff, toggledOn, enforced }
 class TableCalendar<T> extends StatefulWidget {
   /// Locale to format `TableCalendar` dates with, for example: `'en_US'`.
   ///
+  ///
+  ///
   /// If nothing is provided, a default locale will be used.
   final dynamic locale;
+
+  final String preHeader;
 
   /// The start of the selected day range.
   final DateTime? rangeStartDay;
@@ -214,6 +218,7 @@ class TableCalendar<T> extends StatefulWidget {
     this.sixWeekMonthsEnforced = false,
     this.shouldFillViewport = false,
     this.rowHeight = 52.0,
+    this.preHeader = "",
     this.daysOfWeekHeight = 16.0,
     this.formatAnimationDuration = const Duration(milliseconds: 200),
     this.formatAnimationCurve = Curves.linear,
@@ -443,6 +448,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
                 onLeftChevronTap: _onLeftChevronTap,
                 onRightChevronTap: _onRightChevronTap,
                 onHeaderTap: () => widget.onHeaderTapped?.call(value),
+                 preHeader: widget.preHeader,
                 onHeaderLongPress: () =>
                     widget.onHeaderLongPressed?.call(value),
                 headerStyle: widget.headerStyle,
